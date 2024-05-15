@@ -8,7 +8,7 @@ const submitButton = document.getElementById("submit");
 const resetButton = document.getElementById("reset");
 
 //outputs
-const messages = document.querySelector(".message");
+var messages = document.getElementsByClassName("message");
 const tooHighMessage = document.getElementById("too-high");
 const tooLowMessage = document.getElementById("too-low");
 const maxGuessesMessage = document.getElementById("max-guesses");
@@ -20,6 +20,17 @@ let targetNumber;
 let attempts = 0;
 let maxNumberOfAttempts = 5;
 
+function hideAllMessages() {
+  let elementIndex = 0;
+  elementIndex <= messages.length;
+  elementIndex++;
+  {
+    messages[elementIndex].style.display = "none";
+  }
+}
+
+console.log(messages);
+hideAllMessages();
 // Returns a random number from min (inclusive) to max (exclusive)
 // Usage:
 // > getRandomNumber(1, 50)
@@ -31,14 +42,6 @@ targetNumber = getRandomNumber(1, 99);
 console.log(`target number: ${targetNumber}`);
 
 //moved function definition up so function is known when called
-function hideAllMessages() {
-  let elementIndex = 0;
-  elementIndex <= messages.length;
-  elementIndex++;
-  {
-    messages[elementIndex].style.display = "block";
-  }
-}
 
 //function to get number
 function getRandomNumber(min, max) {
@@ -48,12 +51,10 @@ function getRandomNumber(min, max) {
 //function to analyze input
 function checkGuess() {
   // Get value from guess input element
-  hideAllMessages();
   const guess = parseInt(guessInput.value, 10);
   attempts = attempts + 1;
 
   //hiding messages while analyzing??? (does this function exist)
-  hideAllMessages();
   //correct answer message
   if (guess === targetNumber) {
     numberOfGuessesMessage.style.display = "";
