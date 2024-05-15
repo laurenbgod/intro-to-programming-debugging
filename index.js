@@ -1,16 +1,24 @@
-const guessInput = document.getElementById('guess');
-const submitButton = document.getElementById('submit');
-const resetButton = document.getElementById('reset');
-const messages = document.getElementsByClassName('message');
-const tooHighMessage = document.getElementById('too-high');
-const tooLowMessage = document.getElementById('too-low');
-const maxGuessesMessage = document.getElementById('max-guesses');
-const numberOfGuessesMessage = document.getElementById('number-of-guesses');
-const correctMessage = document.getElementById('correct');
+//identifying HTML elements
 
+//input
+const guessInput = document.getElementById("guess");
+
+//buttons
+const submitButton = document.getElementById("submit");
+const resetButton = document.getElementById("reset");
+
+//outputs
+const messages = document.querySelector(".message");
+const tooHighMessage = document.getElementById("too-high");
+const tooLowMessage = document.getElementById("too-low");
+const maxGuessesMessage = document.getElementById("max-guesses");
+const numberOfGuessesMessage = document.getElementById("number-of-guesses");
+const correctMessage = document.getElementById("correct");
+
+//declare variables
 let targetNumber;
 let attempts = 0;
-const maxNumberOfAttempts = 5;
+let maxNumberOfAttempts = 5;
 
 // Returns a random number from min (inclusive) to max (exclusive)
 // Usage:
@@ -18,59 +26,78 @@ const maxNumberOfAttempts = 5;
 // <- 32
 // > getRandomNumber(1, 50)
 // <- 11
+
+targetNumber = getRandomNumber(1, 99);
+console.log(`target number: ${targetNumber}`);
+
+//moved function definition up so function is known when called
+function hideAllMessages() {
+  let elementIndex = 0;
+  elementIndex <= messages.length;
+  elementIndex++;
+  {
+    messages[elementIndex].style.display = "block";
+  }
+}
+
+//function to get number
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//function to analyze input
 function checkGuess() {
   // Get value from guess input element
+  hideAllMessages();
   const guess = parseInt(guessInput.value, 10);
   attempts = attempts + 1;
 
+  //hiding messages while analyzing??? (does this function exist)
   hideAllMessages();
-
+  //correct answer message
   if (guess === targetNumber) {
-    numberOfGuessesMessage.style.display = '';
+    numberOfGuessesMessage.style.display = "";
     numberOfGuessesMessage.innerHTML = `You made ${attempts} guesses`;
 
-    correctMessage.style.display = '';
+    correctMessage.style.display = "";
 
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
 
+  //incorrect answer message
   if (guess !== targetNumber) {
     if (guess < targetNumber) {
-      tooLowMessage.style.display = '';
+      tooLowMessage.style.display = "";
     } else {
-      tooLowMessage.style.display = '';
+      tooLowMessage.style.display = "";
     }
 
+    //atempt counter
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
-    numberOfGuessesMessage.style.display = '';
+    //status message
+    numberOfGuessesMessage.style.display = "";
     numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
   }
 
-  if (attempts ==== maxNumberOfAttempts) {
+  //maxed out message
+  if (attempts === maxNumberOfAttempts) {
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
 
-  guessInput.value = '';
+  //????
+  guessInput.value = "";
 
-  resetButton.style.display = '';
+  //????
+  resetButton.style.display = "";
 }
 
-function hideAllMessages() {
-  for (let elementIndex = 0; elementIndex <= messages.length; elementIndex++) {
-    messages[elementIndex].style.display = 'none';
-  }
-}
-
-funtion setup() {
+//should function set up be at the beginning?
+function setup() {
   // Get random number
-  targetNumber = getRandomNumber(1, 100);
+  targetNumber = getRandomNumber(1, 99);
   console.log(`target number: ${targetNumber}`);
 
   // Reset number of attempts
@@ -81,10 +108,10 @@ funtion setup() {
   guessInput.disabled = false;
 
   hideAllMessages();
-  resetButton.style.display = 'none';
+  resetButton.style.display = "none";
 }
 
-submitButton.addEventListener('click', checkGuess);
-resetButton.addEventListener('click', setup);
+submitButton.addEventListener("click", checkGuess);
+resetButton.addEventListener("click", setup);
 
 setup();
